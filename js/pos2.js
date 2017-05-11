@@ -6,7 +6,7 @@
       this.name = name;
       this.price = price;
       this.count = 0;
-      this.button = '<li>' + this.name + '</li>';
+      this.button = '<li class="drink__item">' + this.name + '</li>';
       this.row = '<tr id="' + this.name.toLowerCase() + '"><td>' + this.name + '</td><td>' + this.count + '</td><td class="price">' + this.total + '$ </tr>';
       this.total = function(count){
         return count * this.price;
@@ -84,7 +84,6 @@
       var row = model.clicked.row;
       var bigTotal = model.bigTotal();
       viewTable.render(name,count,price,total, bigTotal, row);
-      console.log(model.clicked.row);
     },
     pass: function(num){
       model.currentNum += num;
@@ -131,7 +130,6 @@
       viewCalculator.renderPayMode(0);
       viewCalculator.renderRefund(0);
       model.drinkList.forEach(function(obj){
-        console.log(model.drinkList[0]);
         obj["count"] = 0;
       })
       model.pay = false;

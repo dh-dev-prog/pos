@@ -73,42 +73,54 @@ body {
 
 /* ---------------------------------------------- MODULE
 */
-.main {
+.page {
   display: flex;
+  align-items: top;
   width: 100%;
-  padding: 10px; }
+  padding: 30px;
+  margin-bottom: 10px; }
 
-ul {
+.check {
+  width: 45%;
+  margin-right: 15px; }
+
+.drink {
+  width: 65%;
+  margin-left: 15px; }
+
+.header {
+  width: 100%;
+  text-align: center;
+  font-size: 2em;
+  font-weight: 400;
+  border: 1px solid #000;
+  border-radius: 10px 10px 0 0; }
+
+.drink__list {
   display: flex;
   flex-wrap: wrap;
-  width: 50%;
-  max-height: calc(100px * 3);
-  margin-left: 10px; }
+  width: 100%;
+  padding: 1%;
+  background-color: #fdfdfd;
+  border: 1px solid #000;
+  border-radius: 5px; }
 
-li, #reset {
+.drink__item {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: calc((100% - 8%)/4);
-  height: 100px;
-  margin: 0 1%;
-  background: #c0c0c0;
+  width: calc((100% - 16%)/4);
+  height: calc((100% - 12%)/4);
+  margin: 2%;
   background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#C0C0C0), to(#d9d9d9));
   background: -webkit-linear-gradient(0% 0%, 0% 100%, from(#C0C0C0), to(#d9d9d9));
-  background: -moz-linear-gradient(center top, #c0c0c0, #d9d9d9);
-  background: linear-gradient(#c0c0c0, #d9d9d9);
-  text-align: center;
-  border-radius: 3px;
+  background: -moz-linear-gradient(left top, #c0c0c0, #d9d9d9);
+  background: linear-gradient(to right bottom, #c0c0c0, #d9d9d9);
+  border-radius: 5px;
   cursor: pointer; }
-  li:nth-of-type(n+5), #reset:nth-of-type(n+5) {
-    margin-top: 1%; }
-
-.numbers {
-  width: 50%;
-  height: 80vh; }
 
 table {
-  width: 80%;
+  width: 100%;
   border-collapse: collapse;
   border: 1px solid black; }
 
@@ -127,16 +139,12 @@ td {
   td:nth-of-type(3) {
     text-align: right; }
 
-#showNumber {
-  background-color: #c0c0c0;
-  background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#C0C0C0), to(#d9d9d9));
-  background: -webkit-linear-gradient(0% 0%, 0% 100%, from(#C0C0C0), to(#d9d9d9));
-  background: -moz-linear-gradient(center top, #c0c0c0, #d9d9d9);
-  background: linear-gradient(#c0c0c0, #d9d9d9);
-  font-size: 2em; }
-
-#money, #refund {
+.divs {
+  width: 100%;
   font-size: 2em;
   border: 1px solid black; }
+
+#calculator {
+  display: none; }
 
 /*# sourceMappingURL=pos.css.map */
