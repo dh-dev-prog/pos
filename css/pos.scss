@@ -3,6 +3,12 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto:100,400,700');
 
 // ----------------------------------- SASS VAR & MIXINS
+@mixin gradient {
+  background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#C0C0C0), to(#d9d9d9));
+  background: -webkit-linear-gradient(0% 0%, 0% 100%, from(#C0C0C0), to(#d9d9d9));
+  background: -moz-linear-gradient(center top, #c0c0c0, #d9d9d9);
+  background: linear-gradient(#c0c0c0, #d9d9d9);
+}
 
 // ---------------------------- Layout
 
@@ -10,7 +16,6 @@
   display: inline-block;
   vertical-align: top;
 }
-
 
 /* ------------------------------------------------ BASE
 */
@@ -28,46 +33,51 @@ body {
 /* ---------------------------------------------- MODULE
 */
 
-.list-items {
-  @extend %inline-block;
+.main {
+  display: flex;
+  width: 100%;
+  padding: 10px;
 }
 ul {
-  width: 400px;
   display: flex;
   flex-wrap: wrap;
+  width: 50%;
+  max-height: calc(100px * 3);
+  margin-left: 10px;
 }
 li, #reset {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: calc((400px - 8px)/4);
+  width: calc((100% - 8%)/4);
   height: 100px;
+  margin: 0 1%;
   background: #c0c0c0;
-  background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#C0C0C0), to(#d9d9d9));
-  background: -webkit-linear-gradient(0% 0%, 0% 100%, from(#C0C0C0), to(#d9d9d9));
-  background: -moz-linear-gradient(center top, #c0c0c0, #d9d9d9);
-  background: linear-gradient(#c0c0c0, #d9d9d9);
+  @include gradient;
   text-align: center;
-  border: 1px solid #d9d9d9;
-  border-radius: 2px;
+  border-radius: 3px;
   cursor: pointer;
+  &:nth-of-type(n+5) {
+    margin-top: 1%;
+  }
 }
-.resume {
-  @extend %inline-block;
+.numbers {
+  width: 50%;
+  height: 80vh;
 }
 table {
+  width: 80%;
   border-collapse: collapse;
   border: 1px solid black;
 }
 th {
-  min-width: 150px;
   line-height: 2em;
   background-color: #29313C;
   color: #fdfdfd;
 }
 td {
-  min-width: 150px;
   padding: 5px 10px;
+  border-bottom: 1px solid #000;
   text-align: left;
   &:nth-of-type(2) {
     text-align: center;
@@ -77,14 +87,13 @@ td {
     text-align: right;
   }
 }
+
 #showNumber {
-  width: 450px;
   background-color: #c0c0c0;
-  background: linear-gradient(#c0c0c0, #d9d9d9);
+  @include gradient;
   font-size: 2em;
 }
 #money, #refund {
-  width: 450px;
   font-size: 2em;
   border: 1px solid black;
 }

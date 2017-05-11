@@ -6,40 +6,42 @@
     <link rel="stylesheet" type="text/css" href="css/pos.css">
   </head>
   <body>
-    <div class="list-items">
+
+    <div class="main">
       <ul id="list">
       </ul>
+      <div class="numbers">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col"> Item List </th>
+              <th scope="col"> Quantity </th>
+              <th scope="col"> Price </th>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td colspan="2"></td>
+              <td id="bigTotal">Total:</td>
+            </tr>
+            <tr>
+              <td colspan="2"></td>
+              <td>
+                <button id="charge">Charge</button>
+              </td>
+            </tr>
+          </tfoot>
+        </table>
+        <div id="showNumber"></div>
+        <div id="money"></div>
+        <div id="refund"></div>
+        <button id="pay">Pay</button>
+        <div id="reset">RESET</div>
+      </div>
     </div>
-    <div class="resume">
-      <table>
-        <thead>
-          <tr>
-            <th scope="col"> Item List </th>
-            <th scope="col"> Quantity </th>
-            <th scope="col"> Price </th>
-          </tr>
-        </thead>
-        <tbody>
-        </tbody>
-        <tfoot>
-          <tr>
-            <td colspan="2"></td>
-            <td id="bigTotal">Total:</td>
-          </tr>
-          <tr>
-            <td colspan="2"></td>
-            <td>
-              <button id="charge">Charge</button>
-            </td>
-          </tr>
-        </tfoot>
-      </table>
-      <div id="showNumber"></div>
-      <div id="money"></div>
-      <div id="refund"></div>
-      <button id="pay">Pay</button>
-      <div id="reset">RESET</div>
-    </div>
+
     <div>
       <ul id="calculator">
         <li class="number"    id="1">1</li>
@@ -60,6 +62,7 @@
         <li class="operator"  id="/">/</li>
       </ul>
     </div>
+
   <script src="js/pos2.js"></script>
   </body>
   </html>
