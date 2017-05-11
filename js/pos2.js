@@ -19,18 +19,18 @@
     },
     // CALCULATOR
     currentNum: '',
-    id: '',
+    operator: '',
     numA: 0,
     numB: 0,
     total: 0,
-    operators: {
+    operation: {
       '+': function(a, b) { return a + b },
       '-': function(a, b) { return a - b },
       '*': function(a, b) { return a * b },
       '/': function(a, b) { return a / b },
     },
     calculator: function(){
-      this.total = this.operators[this.id[this.id.length - 1]](this.numA, this.numB);
+      this.total = this.operation[this.operator](this.numA, this.numB);
       this.numA = this.total;
       octopus.total(this.total);
     },
@@ -82,27 +82,27 @@
       var bigTotal = model.bigTotal();
       viewTable.render(name,count,price,total, bigTotal);
     },
-    pass: function(id){
-      model.currentNum += id;
+    pass: function(num){
+      model.currentNum += num;
       if (model.pay) {
         viewCalculator.renderPayMode(model.currentNum);
       } else {
         viewCalculator.render(model.currentNum);
       }
       if (model.numA !== 0) {
-        if (model.id) {
+        if (model.operator) {
           model.numB = Number(model.currentNum);
           model.currentNum = '';
           model.calculator();
-          model.id = '';
+          model.operator = '';
         } else {
           model.numA = 0;
           model.numB = 0;
         }
       }
     },
-    passOperator: function(id){
-      model.id = id;
+    passOperator: function(operator){
+      model.operator = operator;
       if (model.numA === 0){
         model.numA = Number(model.currentNum);
         model.currentNum = '';
