@@ -1,0 +1,132 @@
+/* ----------------------------------------------- RESET
+*/
+/* http://meyerweb.com/eric/tools/css/reset/
+   2. v2.0 | 20110126 License: none (public domain)
+*/
+@import url("https://fonts.googleapis.com/css?family=Roboto:100,400,700");
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline; }
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block; }
+
+body {
+  line-height: 1; }
+
+ol, ul {
+  list-style: none; }
+
+blockquote, q {
+  quotes: none; }
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none; }
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0; }
+
+/* ---------------------------------------------- LAYOUT
+*/
+*,
+*::before,
+*::after {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box; }
+
+.list-items, .resume {
+  display: inline-block;
+  vertical-align: top; }
+
+/* ------------------------------------------------ BASE
+*/
+body {
+  font: 100 14px "Roboto", sans-serif;
+  -webkit-user-select: none;
+  /* Chrome/Safari */
+  -moz-user-select: none;
+  /* Firefox */
+  -ms-user-select: none;
+  /* IE10+ */
+  /* Rules below not implemented in browsers yet */
+  -o-user-select: none;
+  user-select: none;
+  /* To target IE9 downwards and Opera the html attribute unselectable must be used instead: <div unselectable="on">Test Text</div> */ }
+
+/* ---------------------------------------------- MODULE
+*/
+ul {
+  width: 400px;
+  display: flex;
+  flex-wrap: wrap; }
+
+li, #reset {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: calc((400px - 8px)/4);
+  height: 100px;
+  background: #c0c0c0;
+  background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#C0C0C0), to(#d9d9d9));
+  background: -webkit-linear-gradient(0% 0%, 0% 100%, from(#C0C0C0), to(#d9d9d9));
+  background: -moz-linear-gradient(center top, #c0c0c0, #d9d9d9);
+  background: linear-gradient(#c0c0c0, #d9d9d9);
+  text-align: center;
+  border: 1px solid #d9d9d9;
+  border-radius: 2px;
+  cursor: pointer; }
+
+table {
+  border-collapse: collapse;
+  border: 1px solid black; }
+
+th {
+  min-width: 150px;
+  line-height: 2em;
+  background-color: #29313C;
+  color: #fdfdfd; }
+
+td {
+  min-width: 150px;
+  padding: 5px 10px;
+  text-align: left; }
+  td:nth-of-type(2) {
+    text-align: center;
+    color: #3B9FF4; }
+  td:nth-of-type(3) {
+    text-align: right; }
+
+#showNumber {
+  width: 450px;
+  background-color: #c0c0c0;
+  background: linear-gradient(#c0c0c0, #d9d9d9);
+  font-size: 2em; }
+
+#money, #refund {
+  width: 450px;
+  font-size: 2em;
+  border: 1px solid black; }
+
+/*# sourceMappingURL=pos.css.map */
