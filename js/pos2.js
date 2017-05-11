@@ -6,6 +6,8 @@
       this.name = name;
       this.price = price;
       this.count = 0;
+      this.button = '<li>' + this.name + '</li>';
+      this.row = '<tr id="' + this.name.toLowerCase() + '"><td>' + this.name + '</td><td>' + this.count + '</td><td class="price">' + this.total + '$ </tr>';
       this.total = function(count){
         return count * this.price;
       }
@@ -38,10 +40,10 @@
   };
   var octopus = {
     init: function(){
+      this.add();
       viewPanel.init();
       viewTable.init();
       viewCalculator.init();
-      this.add();
     },
     add: function(){
       new model.Drink('Latte',4);
@@ -79,8 +81,10 @@
       var count = model.clicked.count;
       var price = model.clicked.price;
       var total = model.clicked.total(count);
+      var row = model.clicked.row;
       var bigTotal = model.bigTotal();
-      viewTable.render(name,count,price,total, bigTotal);
+      viewTable.render(name,count,price,total, bigTotal, row);
+      console.log(model.clicked.row);
     },
     pass: function(num){
       model.currentNum += num;
@@ -127,6 +131,7 @@
       viewCalculator.renderPayMode(0);
       viewCalculator.renderRefund(0);
       model.drinkList.forEach(function(obj){
+        console.log(model.drinkList[0]);
         obj["count"] = 0;
       })
       model.pay = false;
@@ -135,6 +140,10 @@
   var viewPanel = {
     init: function(){
       var list = document.getElementById('list');
+      model.drinkList.forEach(function(obj){
+        var el = obj['button'];
+        list.innerHTML += el;
+      })
       list.addEventListener('click', function(e){
         e.preventDefault();
         var target = e.target;
@@ -162,9 +171,9 @@
         octopus.reset();
       })
     },
-    render: function(name, count, price, total, bigTotal){
+    render: function(name, count, price, total, bigTotal, row){
       var rowByName = document.getElementById(name);
-      var row;
+
       var sum = 0;
 
       if(rowByName){                                                            //if a row with an this name as id already exists
