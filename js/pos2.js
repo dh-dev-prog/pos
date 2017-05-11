@@ -19,7 +19,7 @@
     },
     // CALCULATOR
     currentNum: '',
-    id: [],
+    id: '',
     numA: 0,
     numB: 0,
     total: 0,
@@ -90,13 +90,19 @@
         viewCalculator.render(model.currentNum);
       }
       if (model.numA !== 0) {
-        model.numB = Number(model.currentNum);
-        model.currentNum = '';
-        model.calculator();
+        if (model.id) {
+          model.numB = Number(model.currentNum);
+          model.currentNum = '';
+          model.calculator();
+          model.id = '';
+        } else {
+          model.numA = 0;
+          model.numB = 0;
+        }
       }
     },
     passOperator: function(id){
-      model.id.push(id);
+      model.id = id;
       if (model.numA === 0){
         model.numA = Number(model.currentNum);
         model.currentNum = '';
