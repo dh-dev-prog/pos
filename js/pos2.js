@@ -21,7 +21,7 @@
     },
     // CALCULATOR
     currentNum: '',
-    operator: '',
+    operator: [],
     numA: 0,
     numB: 0,
     total: 0,
@@ -32,7 +32,7 @@
       '/': function(a, b) { return a / b },
     },
     calculator: function(){
-      this.total = this.operation[this.operator](this.numA, this.numB);
+      this.total = this.operation[this.operator[this.operator.length - 2]](this.numA, this.numB);
       this.numA = this.total;
       octopus.total(this.total);
     },
@@ -93,21 +93,17 @@
         viewCalculator.render(model.currentNum);
       }
       if (model.numA !== 0) {
-        if (model.operator) {
-          model.numB = Number(model.currentNum);
-          model.calculator();
-          model.currentNum = '';
-          model.operator = '';
-        } else {
-          model.numA = 0;
-          model.numB = 0;
-        }
+        model.numB = Number(model.currentNum);
       }
     },
     passOperator: function(operator){
-      model.operator = operator;
+      model.operator.push(operator);
       if (model.numA === 0){
         model.numA = Number(model.currentNum);
+        model.currentNum = '';
+      }
+      if(model.numB !== 0) {
+        model.calculator();
         model.currentNum = '';
       }
     },

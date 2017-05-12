@@ -114,6 +114,10 @@ body {
 .calculator {
   @extend .drink__list;
 }
+.calculator__list:nth-of-type(n+1) {
+  @extend .drink__list;
+  width: 50%;
+}
 .calculator__item {
   @extend .drink__item;
   width: 60px;
