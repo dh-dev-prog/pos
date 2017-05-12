@@ -75,7 +75,17 @@ body {
 /* ---------------------------------------------- MODULE
 */
 .page {
+  display: -webkit-box;
+  /* OLD - iOS 6-, Safari 3.1-6, BB7 */
+  display: -ms-flexbox;
+  /* TWEENER - IE 10 */
+  display: -webkit-flex;
+  /* NEW - Safari 6.1+. iOS 7.1+, BB10 */
   display: flex;
+  /* NEW, Spec - Firefox, Chrome, Opera */
+  -webkit-flex-align: top;
+  -ms-flex-align: top;
+  -webkit-align-items: top;
   align-items: top;
   width: 100%;
   padding: 30px;
@@ -109,17 +119,35 @@ body {
   text-align: center;
   text-transform: capitalize; }
 
-.drink__list {
+.drink__list, .calculator {
+  display: -webkit-box;
+  /* OLD - iOS 6-, Safari 3.1-6, BB7 */
+  display: -ms-flexbox;
+  /* TWEENER - IE 10 */
+  display: -webkit-flex;
+  /* NEW - Safari 6.1+. iOS 7.1+, BB10 */
   display: flex;
+  /* NEW, Spec - Firefox, Chrome, Opera */
   flex-wrap: wrap;
   width: 100%;
   padding: 1%;
   background-color: #f0f1f2;
   border-radius: 0 0 5px 5px; }
 
-.drink__item {
+.drink__item, .calculator__item {
+  display: -webkit-box;
+  /* OLD - iOS 6-, Safari 3.1-6, BB7 */
+  display: -ms-flexbox;
+  /* TWEENER - IE 10 */
+  display: -webkit-flex;
+  /* NEW - Safari 6.1+. iOS 7.1+, BB10 */
   display: flex;
+  /* NEW, Spec - Firefox, Chrome, Opera */
+  -webkit-justify-content: center;
   justify-content: center;
+  -webkit-flex-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
   align-items: center;
   width: 110px;
   height: 110px;
@@ -130,7 +158,12 @@ body {
   background: linear-gradient(to left bottom, #6D90CB, #5D84C5);
   border-radius: 5px;
   color: #fff;
+  text-align: center;
   cursor: pointer; }
+
+.calculator__item {
+  width: 60px;
+  height: 60px; }
 
 table {
   width: 100%;
@@ -158,8 +191,5 @@ td {
   width: 100%;
   font-size: 2em;
   border: 1px solid black; }
-
-#calculator {
-  display: none; }
 
 /*# sourceMappingURL=pos.css.map */

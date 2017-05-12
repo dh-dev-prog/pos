@@ -95,8 +95,8 @@
       if (model.numA !== 0) {
         if (model.operator) {
           model.numB = Number(model.currentNum);
-          model.currentNum = '';
           model.calculator();
+          model.currentNum = '';
           model.operator = '';
         } else {
           model.numA = 0;
@@ -206,9 +206,9 @@
       function getNumber(e){
         var target = e.target;
         var id = target.id;
-        if(target.getAttribute('class') === 'number'){
+        if(target.getAttribute('class').split(' ')[0] === 'number'){
           octopus.pass(id);
-        } else if (target.getAttribute('class') === 'operator') {
+        } else if (target.getAttribute('class').split(' ')[0] === 'operator') {
           octopus.passOperator(id);
         }
       };

@@ -26,9 +26,27 @@
               <td id="bigTotal">Total:</td>
             </tr>
             <tr>
-              <td colspan="2"></td>
-              <td>
+              <td colspan="3">
                 <button id="charge">Charge</button>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="3" id="showNumber"></td>
+            </tr>
+            <tr>
+              <td colspan="3" id="money"></td>
+            </tr>
+            <tr>
+              <td colspan="3" id="refund"></td>
+            </tr>
+            <tr>
+               <td>
+                 <button id="pay">pay</button>
+               </td>
+            </tr>
+            <tr>
+              <td colspan="3">
+                <button id="reset">reset</button>
               </td>
             </tr>
           </tfoot>
@@ -38,15 +56,29 @@
         <div class="header">coffee drinks</div>
         <ul class="drink__list" id="list">
         </ul>
+        <ul class="calculator" id="calculator">
+          <li class="number calculator__item"    id="1">1</li>
+          <li class="number calculator__item"    id="2">2</li>
+          <li class="number calculator__item"    id="3">3</li>
+          <li class="operator calculator__item"  id="+">+</li>
+          <li class="number calculator__item"    id="4">4</li>
+          <li class="number calculator__item"    id="5">5</li>
+          <li class="number calculator__item"    id="6">6</li>
+          <li class="operator calculator__item"  id="-">-</li>
+          <li class="number calculator__item"    id="7">7</li>
+          <li class="number calculator__item"    id="8">8</li>
+          <li class="number calculator__item"    id="9">9</li>
+          <li class="operator calculator__item"  id="*">x</li>
+          <li class="number calculator__item"    id="0">0</li>
+          <li class="number calculator__item"    id="00">00</li>
+          <li class="calculator__item"           id="C">C</li>
+          <li class="operator calculator__item"  id="/">/</li>
+        </ul>
       </div>
     </div>
-    <div class="divs">
-      <div id="showNumber"></div>
-      <div id="money"></div>
-      <div id="refund"></div>
-      <div id="pay">Pay</div>
-      <div id="reset">RESET</div>
-    </div>
+
+
+
 
   <script src="js/pos2.js"></script>
   </body>
