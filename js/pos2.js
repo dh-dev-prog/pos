@@ -100,15 +100,19 @@
       model.operator.push(operator);
       if (model.numA === 0){
         model.numA = Number(model.currentNum);
-        model.currentNum = '';
       }
       if(model.numB !== 0) {
         model.calculator();
-        model.currentNum = '';
+        model.numB = 0;
       }
+      model.currentNum = ''
     },
     total: function(total){
-      viewCalculator.render(total);
+      if (model.pay) {
+        viewCalculator.renderPayMode(total);
+      } else {
+        viewCalculator.render(total);
+      }
     },
     getChange: function() {
       var change = Number(model.currentNum) - model.bigTotal();
@@ -159,6 +163,7 @@
         e.preventDefault();
         var total = viewTable.bigTotal.innerHTML;
         viewCalculator.showNumber.innerHTML = total;
+        model.currentNum = '';
         model.pay = true;
       })
       this.reset.addEventListener('click', function(){
