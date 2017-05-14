@@ -93,18 +93,32 @@ body {
 
 @media all and (min-width: 900px) {
   .page {
-    width: 950px;
+    width: 1024px;
     margin: 0 auto; } }
 @media all and (max-width: 700px) {
   .page {
     min-width: 700px;
     margin: 0 auto; } }
 .check {
-  width: 45%;
+  width: 30%;
   margin-right: 15px; }
 
-.drink {
-  width: 65%;
+.container {
+  display: -webkit-box;
+  /* OLD - iOS 6-, Safari 3.1-6, BB7 */
+  display: -ms-flexbox;
+  /* TWEENER - IE 10 */
+  display: -webkit-flex;
+  /* NEW - Safari 6.1+. iOS 7.1+, BB10 */
+  display: flex;
+  /* NEW, Spec - Firefox, Chrome, Opera */
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-flex-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+  width: 70%;
   margin-left: 15px; }
 
 .header {
@@ -119,7 +133,7 @@ body {
   text-align: center;
   text-transform: capitalize; }
 
-.drink__list, .calculator, .calculator__list:nth-of-type(n+1) {
+.drink__list, .calculator__list {
   display: -webkit-box;
   /* OLD - iOS 6-, Safari 3.1-6, BB7 */
   display: -ms-flexbox;
@@ -161,12 +175,34 @@ body {
   text-align: center;
   cursor: pointer; }
 
-.calculator__list:nth-of-type(n+1) {
-  width: 50%; }
+.drink {
+  display: block; }
 
-.calculator__item {
-  width: 60px;
-  height: 60px; }
+.calculator {
+  display: none; }
+
+.arrow-slide {
+  display: -webkit-box;
+  /* OLD - iOS 6-, Safari 3.1-6, BB7 */
+  display: -ms-flexbox;
+  /* TWEENER - IE 10 */
+  display: -webkit-flex;
+  /* NEW - Safari 6.1+. iOS 7.1+, BB10 */
+  display: flex;
+  /* NEW, Spec - Firefox, Chrome, Opera */
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-flex-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+  min-width: 80px;
+  height: 80px;
+  background-color: silver;
+  border-radius: 50px;
+  margin: 0 5%;
+  font-size: 1.5em;
+  cursor: pointer; }
 
 table {
   width: 100%;
@@ -189,5 +225,13 @@ td {
     color: #3B9FF4; }
   td:nth-of-type(3) {
     text-align: right; }
+
+/* ---------------------------------------------- STATE
+*/
+.is__active {
+  display: block; }
+
+.is__hidden {
+  display: none; }
 
 /*# sourceMappingURL=pos.css.map */

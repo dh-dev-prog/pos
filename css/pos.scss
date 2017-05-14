@@ -60,7 +60,7 @@ body {
 }
 @media all and (min-width:900px) {
   .page {
-    width: 950px;
+    width: 1024px;
     margin: 0 auto;
   }
 }
@@ -71,11 +71,14 @@ body {
   }
 }
 .check {
-  width: 45%;
+  width: 30%;
   margin-right: 15px;
 }
-.drink {
-  width: 65%;
+.container {
+  @include flex;
+  @include justify-content-center;
+  @include align-items-center;
+  width: 70%;
   margin-left: 15px;
 }
 .header {
@@ -97,6 +100,7 @@ body {
   padding: 1%;
   background-color: #f0f1f2;
   border-radius: 0 0 5px 5px;
+
 }
 .drink__item {
   @include flex;
@@ -111,20 +115,30 @@ body {
   text-align: center;
   cursor: pointer;
 }
-.calculator {
-  @extend .drink__list;
-  
+.drink {
+  display: block;
 }
-.calculator__list:nth-of-type(n+1) {
+.calculator {
+  display: none;
+}
+.calculator__list {
   @extend .drink__list;
-  width: 50%;
 }
 .calculator__item {
   @extend .drink__item;
-  width: 60px;
-  height: 60px;
 }
-
+.arrow-slide {
+  @include flex;
+  @include justify-content-center;
+  @include align-items-center;
+  min-width: 80px;
+  height: 80px;
+  background-color: silver;
+  border-radius: 50px;
+  margin: 0 5%;
+  font-size: 1.5em;
+  cursor: pointer;
+}
 table {
   width: 100%;
   background-color: #F5F5F5;
@@ -148,4 +162,14 @@ td {
   &:nth-of-type(3) {
     text-align: right;
   }
+}
+
+/* ---------------------------------------------- STATE
+*/
+
+.is__active {
+  display: block;
+}
+.is__hidden {
+  display: none;
 }

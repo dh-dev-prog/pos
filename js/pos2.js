@@ -137,17 +137,27 @@
   };
   var viewPanel = {
     init: function(){
-      var list = document.getElementById('list');
+      this.list = document.getElementById('list');
+      this.arrow = document.getElementById('arrow');
+      this.drinks = document.querySelector('.drink');
+      this.calculator = document.querySelector('.calculator');
+
       model.drinkList.forEach(function(obj){
         var el = obj['button'];
         list.innerHTML += el;
-      })
-      list.addEventListener('click', function(e){
+      });
+      this.list.addEventListener('click', function(e){
         e.preventDefault();
         var target = e.target;
         var name = target.textContent;
         octopus.updateCurrObj(name);
         octopus.getInfo(name);
+      });
+      this.arrow.addEventListener('click', function(){
+        this.firstChild.classList.toggle('ion-chevron-left');
+        this.firstChild.classList.toggle('ion-chevron-right');
+        viewPanel.drinks.classList.toggle('is__hidden');
+        viewPanel.calculator.classList.toggle('is__active');
       })
     }
   };
@@ -198,6 +208,7 @@
       this.money = document.getElementById('money');
       this.pay = document.getElementById('pay');
       this.refund = document.getElementById('refund');
+      this.switch = document.getElementById('switch_calculator');
 
       this.showNumber.innerHTML = 0;
       this.money.innerHTML =  'Pay:    ' + 0 + '$';
@@ -218,13 +229,11 @@
         var key = e.key;
         document.getElementById(key).click();
       }, true);
-
       //Show the change difference
       this.pay.addEventListener('click', function(e){
         e.preventDefault();
         octopus.getChange();
       })
-
     },
     render: function(num){
       this.showNumber.innerHTML = num;
