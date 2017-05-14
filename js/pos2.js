@@ -36,7 +36,8 @@
       this.numA = this.total;
       octopus.total(this.total);
     },
-    pay: false
+    pay: false,
+    charge: false
   };
   var octopus = {
     init: function(){
@@ -133,6 +134,7 @@
         obj["count"] = 0;
       })
       model.pay = false;
+      viewPanel.arrow.click();
     }
   };
   var viewPanel = {
@@ -163,14 +165,17 @@
   };
   var viewTable = {
     init: function(){
+
       this.tbody = document.getElementsByTagName('tbody')[0];
       this.bigTotal = document.getElementById('bigTotal');
       this.bigTotal.innerHTML = 'Total: ' + 0;
       this.charge = document.getElementById('charge');
       this.reset = document.getElementById('reset');
 
+
       this.charge.addEventListener('click', function(e){
         e.preventDefault();
+        viewPanel.arrow.click();
         var total = viewTable.bigTotal.innerHTML;
         viewCalculator.showNumber.innerHTML = total;
         model.currentNum = '';
@@ -210,7 +215,7 @@
       this.refund = document.getElementById('refund');
       this.switch = document.getElementById('switch_calculator');
 
-      this.showNumber.innerHTML = 0;
+      this.showNumber.innerHTML = 'Total: ' + 0 + '$';
       this.money.innerHTML =  'Pay:    ' + 0 + '$';
       this.refund.innerHTML = 'Refund: ' + 0 + '$';
 
@@ -236,7 +241,7 @@
       })
     },
     render: function(num){
-      this.showNumber.innerHTML = num;
+      this.showNumber.innerHTML = 'Total: ' + num + '$';
     },
     renderPayMode: function(num) {
       this.money.innerHTML = 'Pay: ' + num + '$';

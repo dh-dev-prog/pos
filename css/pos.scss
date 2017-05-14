@@ -163,6 +163,36 @@ td {
     text-align: right;
   }
 }
+/*{
+  padding: 10px 20px;
+  background: linear-gradient(#c98474, #d39c8f);
+  border-radius: 3px;
+  border: 1px solid #ce9081;
+  color: #fff;
+  cursor: pointer;
+  &:hover {
+    background: linear-gradient(#a0695c, #c98474);
+    border: 1px solid #b47668;
+    cursor: pointer;
+  }
+}*/
+#pay, #charge {
+  padding: 10px 20px;
+  background: linear-gradient(#a9db80, #98c573);
+  border: 1px solid #98c573;
+  border-radius: 3px;
+  color: #fff;
+  cursor: pointer;
+  &:hover {
+    background: linear-gradient(#b1de8c, #c2e5a6);
+    border: 1px solid #c2e5a6;
+    cursor: pointer;
+  }
+}
+#reset {
+  width: 100%;
+  padding: 10px 0;
+}
 
 /* ---------------------------------------------- STATE
 */
