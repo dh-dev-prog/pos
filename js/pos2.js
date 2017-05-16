@@ -206,18 +206,18 @@
 
   var viewCalculator = {
     init: function(){
-      this.numbers = document.getElementsByClassName('number');
-      this.operators = document.getElementsByClassName('operator');
-      this.list = document.getElementById('calculator');
+      this.numbers    = document.getElementsByClassName('number');
+      this.operators  = document.getElementsByClassName('operator');
+      this.list       = document.getElementById('calculator');
       this.showNumber = document.getElementById('showNumber');
-      this.money = document.getElementById('money');
-      this.pay = document.getElementById('pay');
-      this.refund = document.getElementById('refund');
-      this.switch = document.getElementById('switch_calculator');
+      this.money      = document.getElementById('money');
+      this.pay        = document.getElementById('pay');
+      this.refund     = document.getElementById('refund');
+      this.switch     = document.getElementById('switch_calculator');
 
-      this.showNumber.innerHTML = 'Total: ' + 0 + '$';
-      this.money.innerHTML =  'Pay:    ' + 0 + '$';
-      this.refund.innerHTML = 'Refund: ' + 0 + '$';
+      this.showNumber.innerHTML = 'Total:  ' + 0 + '$';
+      this.money.innerHTML      = 'Pay:    ' + 0 + '$';
+      this.refund.innerHTML     = 'Refund: ' + 0 + '$';
 
       // Get the Numbers
       function getNumber(e){

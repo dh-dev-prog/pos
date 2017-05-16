@@ -126,6 +126,7 @@ body {
 }
 .calculator__item {
   @extend .drink__item;
+  font-size: 1.5em;
 }
 .arrow-slide {
   @include flex;
@@ -138,6 +139,9 @@ body {
   margin: 0 5%;
   font-size: 1.5em;
   cursor: pointer;
+  background: linear-gradient(#c98474, #d39c8f);
+  border: 1px solid #ce9081;
+  color: #fff;
 }
 table {
   width: 100%;
