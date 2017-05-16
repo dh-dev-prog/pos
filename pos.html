@@ -24,23 +24,26 @@
           <tfoot>
             <tr>
               <td colspan="2"></td>
-              <td id="bigTotal">Total:</td>
+              <td id="quantity"></td>
             </tr>
             <tr>
               <td colspan="3">
-                <button id="charge">Charge</button>
+                <div class="button__cell" id="charge">
+                  <div class="button__text_small"> Charge </div>
+                  <div class="button__text_big" id="bigTotal"></div>
+                </div>
               </td>
             </tr>
             <tr>
               <td colspan="3" id="showNumber"></td>
             </tr>
             <tr>
-              <td colspan="3" id="money"></td>
-            </tr>
-            <tr>
-               <td>
-                 <button id="pay">pay</button>
-               </td>
+              <td colspan="3">
+                <div class="button__cell" id="money">
+                  <div class="button__text_small">Cash</div>
+                  <div class="button__text_big"></div>
+                </div>
+              </td>
             </tr>
             <tr>
               <td colspan="3" id="refund"></td>
@@ -53,39 +56,32 @@
           </tfoot>
         </table>
       </div>
-
       <div class="container">
-
-      <div class="drink">
-        <div class="header">coffee drinks</div>
-        <ul class="drink__list" id="list">
-        </ul>
-      </div>
-
-      <div class="calculator" id="calculator">
-        <div class="header">Calculator</div>
-        <ul class="calculator__list">
-          <li class="number calculator__item"    id="1">1</li>
-          <li class="number calculator__item"    id="2">2</li>
-          <li class="number calculator__item"    id="3">3</li>
-          <li class="number calculator__item"    id="4">4</li>
-          <li class="number calculator__item"    id="5">5</li>
-          <li class="number calculator__item"    id="6">6</li>
-          <li class="number calculator__item"    id="7">7</li>
-          <li class="number calculator__item"    id="8">8</li>
-          <li class="number calculator__item"    id="9">9</li>
-          <li class="number calculator__item"    id="0">0</li>
-          <li class="number calculator__item"    id="00">00</li>
-          <li class="calculator__item"           id="C">C</li>
-        </ul>
-      </div>
-      <div class="arrow-slide" id="arrow"><i class="ion-chevron-right"></i></div>
+        <div class="drink">
+          <div class="header">coffee drinks</div>
+          <ul class="drink__list" id="list">
+          </ul>
+        </div>
+        <div class="calculator">
+          <div class="header">Calculator</div>
+          <ul class="calculator__list">
+            <li class="number calculator__item"    id="1">1</li>
+            <li class="number calculator__item"    id="2">2</li>
+            <li class="number calculator__item"    id="3">3</li>
+            <li class="number calculator__item"    id="4">4</li>
+            <li class="number calculator__item"    id="5">5</li>
+            <li class="number calculator__item"    id="6">6</li>
+            <li class="number calculator__item"    id="7">7</li>
+            <li class="number calculator__item"    id="8">8</li>
+            <li class="number calculator__item"    id="9">9</li>
+            <li class="number calculator__item"    id="0">0</li>
+            <li class="number calculator__item"    id="00">00</li>
+            <li class="calculator__item"           id="C">C</li>
+          </ul>
+        </div>
+        <div class="arrow" id="arrow"><i class="ion-chevron-right"></i></div>
     </div>
-
-
   </div>
-
-
   <script src="js/pos2.js"></script>
   </body>
   </html>

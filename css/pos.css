@@ -89,7 +89,8 @@ body {
   align-items: top;
   width: 100%;
   padding: 30px;
-  margin-bottom: 10px; }
+  margin-bottom: 10px;
+  border: 1px solid black; }
 
 @media all and (min-width: 900px) {
   .page {
@@ -114,12 +115,14 @@ body {
   /* NEW, Spec - Firefox, Chrome, Opera */
   -webkit-justify-content: center;
   justify-content: center;
-  -webkit-flex-align: center;
-  -ms-flex-align: center;
-  -webkit-align-items: center;
-  align-items: center;
+  -webkit-flex-align: top;
+  -ms-flex-align: top;
+  -webkit-align-items: top;
+  align-items: top;
+  align-self: flex-start;
   width: 70%;
-  margin-left: 15px; }
+  margin-left: 15px;
+  border: 1px solid black; }
 
 .header {
   width: 100%;
@@ -184,7 +187,7 @@ body {
 .calculator__item {
   font-size: 1.5em; }
 
-.arrow-slide {
+.arrow {
   display: -webkit-box;
   /* OLD - iOS 6-, Safari 3.1-6, BB7 */
   display: -ms-flexbox;
@@ -199,16 +202,21 @@ body {
   -ms-flex-align: center;
   -webkit-align-items: center;
   align-items: center;
+  align-self: center;
   min-width: 80px;
   height: 80px;
+  margin: 0 5%;
+  background: linear-gradient(#c98474, #d39c8f);
   background-color: silver;
   border-radius: 50px;
-  margin: 0 5%;
+  border: 1px solid #ce9081;
+  box-shadow: 8px 10px 20px 0px rgba(46, 61, 73, 0.3);
+  transition: box-shadow 0.3s ease;
   font-size: 1.5em;
   cursor: pointer;
-  background: linear-gradient(#c98474, #d39c8f);
-  border: 1px solid #ce9081;
   color: #fff; }
+  .arrow:hover {
+    box-shadow: 4px 5px 20px 0px rgba(46, 61, 73, 0.3); }
 
 table {
   width: 100%;
@@ -245,21 +253,41 @@ td {
     cursor: pointer;
   }
 }*/
-#pay, #charge {
+.button__cell {
+  width: 50%;
   padding: 10px 20px;
   background: linear-gradient(#a9db80, #98c573);
   border: 1px solid #98c573;
   border-radius: 3px;
   color: #fff;
   cursor: pointer; }
-  #pay:hover, #charge:hover {
+  .button__cell:hover {
     background: linear-gradient(#b1de8c, #c2e5a6);
     border: 1px solid #c2e5a6;
     cursor: pointer; }
 
+.button__text_small {
+  display: inline-block;
+  width: 30%;
+  font-size: 1em;
+  vertical-align: middle; }
+
+.button__text_big {
+  display: inline-block;
+  width: 65%;
+  font-size: 1.2em;
+  vertical-align: middle;
+  text-align: right; }
+
 #reset {
   width: 100%;
   padding: 10px 0; }
+
+#showNumber, #refund {
+  width: 100%;
+  padding: 10px 20px;
+  color: #c98474;
+  text-align: right; }
 
 /* ---------------------------------------------- STATE
 */

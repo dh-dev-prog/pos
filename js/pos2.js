@@ -2,6 +2,11 @@
   var model = {
     clicked: null,
     drinkList:[],
+    currentNum: '',
+    numA: 0,
+    total: 0,
+    pay: false,
+    charge: false,
     Drink: function(name,price){
       this.name = name;
       this.price = price;
@@ -18,26 +23,7 @@
         return acc + obj.total(obj.count);
       }, 0)
       return sum;
-    },
-    // CALCULATOR
-    currentNum: '',
-    operator: [],
-    numA: 0,
-    numB: 0,
-    total: 0,
-    operation: {
-      '+': function(a, b) { return a + b },
-      '-': function(a, b) { return a - b },
-      '*': function(a, b) { return a * b },
-      '/': function(a, b) { return a / b },
-    },
-    calculator: function(){
-      this.total = this.operation[this.operator[this.operator.length - 2]](this.numA, this.numB);
-      this.numA = this.total;
-      octopus.total(this.total);
-    },
-    pay: false,
-    charge: false
+    }
   };
   var octopus = {
     init: function(){
@@ -61,24 +47,32 @@
       new model.Drink('Tombeau',15);
     },
     updateCurrObj: function(name){
-      var clicked = model.drinkList.filter(function(drink){
+      //Get the clicked item and related object
+      model.clicked = model.drinkList.filter(function(drink){
         return drink.name === name;
-      })
-      model.clicked = clicked[0];
-      if (Number(model.currentNum) !== 0) {                                     // if a number has been pressed
-        model.clicked.count += Number(model.currentNum);                        // count is updated with number pressed
+      })[0];
+    },
+    updateCountObj: function() {
+      //if num entered then update item count by this number, else count++.
+      //!!currentNum has to be reinitialised everytime or next item will be update by this number too
+      if (model.currentNum) {
+        model.clicked.count += Number(model.currentNum);
         model.currentNum = '';
-        viewCalculator.showNumber.innerHTML = 0;                                         // currentNum back to zero (if not it will always update with the number pressed)
-      } else if (model.numA !== 0){
-        model.clicked.count += model.numA ;                        // count is updated with number pressed
-        model.currentNum = '';
-        model.numA = 0;
-        viewCalculator.showNumber.innerHTML = 0;
       } else {
-        model.clicked.count++;                                                  // increment count by 1. if currentNum not previously initialized back to zero, will update by number pressed
+        model.clicked.count++;
+      }
+      // reinitialise quantity counter
+      viewTable.renderNumber(0);
+    },
+    addNumber: function(num){
+      model.currentNum += num;
+      if (model.pay) {
+        viewTable.renderPayMode(Number(model.currentNum));
+      } else {
+        viewTable.renderNumber(Number(model.currentNum));
       }
     },
-    getInfo: function(name){
+    getItem: function(name){
       var count = model.clicked.count;
       var price = model.clicked.price;
       var total = model.clicked.total(count);
@@ -86,38 +80,16 @@
       var bigTotal = model.bigTotal();
       viewTable.render(name,count,price,total, bigTotal, row);
     },
-    pass: function(num){
-      model.currentNum += num;
-      if (model.pay) {
-        viewCalculator.renderPayMode(model.currentNum);
-      } else {
-        viewCalculator.render(model.currentNum);
-      }
-      if (model.numA !== 0) {
-        model.numB = Number(model.currentNum);
-      }
-    },
-    passOperator: function(operator){
-      model.operator.push(operator);
-      if (model.numA === 0){
-        model.numA = Number(model.currentNum);
-      }
-      if(model.numB !== 0) {
-        model.calculator();
-        model.numB = 0;
-      }
-      model.currentNum = ''
-    },
     total: function(total){
       if (model.pay) {
-        viewCalculator.renderPayMode(total);
+        viewTable.renderPayMode(total);
       } else {
-        viewCalculator.render(total);
+        viewTable.renderNumber(total);
       }
     },
     getChange: function() {
       var change = Number(model.currentNum) - model.bigTotal();
-      viewCalculator.renderRefund(change);
+      viewTable.renderRefund(change);
       model.currentNum = ''; //if not reset then next command will start with this num. if payed 36$, then next will be 36 x items
     },
     reset: function(){
@@ -127,9 +99,9 @@
       model.numA = 0;
       model.numB = 0;
       model.total = 0;
-      viewCalculator.render(0);
-      viewCalculator.renderPayMode(0);
-      viewCalculator.renderRefund(0);
+      viewTable.renderNumber(0);
+      viewTable.renderPayMode(0);
+      viewTable.renderRefund(0);
       model.drinkList.forEach(function(obj){
         obj["count"] = 0;
       })
@@ -153,7 +125,8 @@
         var target = e.target;
         var name = target.textContent;
         octopus.updateCurrObj(name);
-        octopus.getInfo(name);
+        octopus.updateCountObj();
+        octopus.getItem(name);
       });
       this.arrow.addEventListener('click', function(){
         this.firstChild.classList.toggle('ion-chevron-left');
@@ -165,90 +138,92 @@
   };
   var viewTable = {
     init: function(){
+      this.tbody      = document.querySelector('tbody');
+      this.bigTotal   = document.getElementById('bigTotal');
+      this.charge     = document.getElementById('charge');
+      this.reset      = document.getElementById('reset');
+      this.money      = document.getElementById('money');
+      this.pay        = document.getElementById('pay');
+      this.refund     = document.getElementById('refund');
+      this.showNumber = document.getElementById('showNumber');
+      this.quantity   = document.getElementById('quantity');
 
-      this.tbody = document.getElementsByTagName('tbody')[0];
-      this.bigTotal = document.getElementById('bigTotal');
-      this.bigTotal.innerHTML = 'Total: ' + 0;
-      this.charge = document.getElementById('charge');
-      this.reset = document.getElementById('reset');
-
+      this.showNumber.innerHTML = 'Total: ' + 0 + '$';
+      this.quantity.innerHTML = 0;
+      this.bigTotal.innerHTML   = 0;
+      this.money.querySelector('.button__text_big').innerHTML = 0 + '$';
+      this.charge.querySelector('.button__text_big').innerHTML = 0 + '$';
+      this.refund.innerHTML     = 'Refund: ' + 0 + '$';
 
       this.charge.addEventListener('click', function(e){
         e.preventDefault();
         viewPanel.arrow.click();
         var total = viewTable.bigTotal.innerHTML;
-        viewCalculator.showNumber.innerHTML = total;
+        viewTable.showNumber.innerHTML = 'Total: ' + total;
         model.currentNum = '';
         model.pay = true;
-      })
+      });
+      //Show the change difference
+      this.money.addEventListener('click', function(e){
+        e.preventDefault();
+        octopus.getChange();
+      });
       this.reset.addEventListener('click', function(){
         octopus.reset();
-      })
+      });
     },
     render: function(name, count, price, total, bigTotal, row){
       var rowByName = document.getElementById(name);
-
       var sum = 0;
-
       if(rowByName){                                                            //if a row with an this name as id already exists
         var counter = rowByName.getElementsByTagName('td')[1];                  // or rowByName.firstChild.nextSibling // if rowByName doesnt exist, cant read his Tags so var cant be on top scope
         var rowTotal = counter.nextSibling;
         counter.innerHTML = count;
         rowTotal.innerHTML = total + '$';
-        this.bigTotal.innerHTML = 'Total: ' + bigTotal + '$';
+        this.bigTotal.innerHTML = bigTotal + '$';
       } else {
         row = '<tr id="' + name + '"><td>' + name + '</td><td>' + count + '</td><td class="price">' + total + '$ </tr>';
         this.tbody.innerHTML += row;
-        this.bigTotal.innerHTML = 'Total: ' + bigTotal + '$';
+        this.bigTotal.innerHTML = bigTotal + '$';
       }
+    },
+    renderNumber: function(num){
+      this.quantity.innerHTML = num;
+    },
+    renderPayMode: function(num) {
+      this.money.querySelector('.button__text_big').innerHTML = num + '$';
+    },
+    renderRefund: function(num) {
+      this.refund.innerHTML = 'Refund: ' + num + '$';
     }
   }
 
   var viewCalculator = {
+
     init: function(){
       this.numbers    = document.getElementsByClassName('number');
-      this.operators  = document.getElementsByClassName('operator');
-      this.list       = document.getElementById('calculator');
-      this.showNumber = document.getElementById('showNumber');
-      this.money      = document.getElementById('money');
-      this.pay        = document.getElementById('pay');
-      this.refund     = document.getElementById('refund');
+      this.list       = document.querySelector('.calculator');
       this.switch     = document.getElementById('switch_calculator');
-
-      this.showNumber.innerHTML = 'Total:  ' + 0 + '$';
-      this.money.innerHTML      = 'Pay:    ' + 0 + '$';
-      this.refund.innerHTML     = 'Refund: ' + 0 + '$';
-
+      console.log(this.numbers);
       // Get the Numbers
       function getNumber(e){
         var target = e.target;
         var id = target.id;
         if(target.getAttribute('class').split(' ')[0] === 'number'){
-          octopus.pass(id);
+          octopus.addNumber(id);
         } else if (target.getAttribute('class').split(' ')[0] === 'operator') {
           octopus.passOperator(id);
         }
       };
+
+      //Clicked number on screen
       this.list.addEventListener('click', getNumber);
+      //Touch key number on Keyboard
       document.addEventListener('keydown', function(e){
         var key = e.key;
         document.getElementById(key).click();
       }, true);
-      //Show the change difference
-      this.pay.addEventListener('click', function(e){
-        e.preventDefault();
-        octopus.getChange();
-      })
     },
-    render: function(num){
-      this.showNumber.innerHTML = 'Total: ' + num + '$';
-    },
-    renderPayMode: function(num) {
-      this.money.innerHTML = 'Pay: ' + num + '$';
-    },
-    renderRefund: function(num) {
-      this.refund.innerHTML = 'Refund: ' + num + '$';
-    }
   }
   octopus.init();
 }());
