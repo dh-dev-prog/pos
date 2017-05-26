@@ -95,7 +95,7 @@
     reset: function(){
       model.currentNum = ''; //same than getChange
       viewTable.tbody.innerHTML = '';
-      viewTable.bigTotal.innerHTML = 'Total: ' + 0;
+      viewTable.bigTotal.innerHTML = 0 + '$';
       model.numA = 0;
       model.numB = 0;
       model.total = 0;

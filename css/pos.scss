@@ -9,7 +9,6 @@
   background: -moz-linear-gradient(right top, #c0c0c0, #d9d9d9);
   background: linear-gradient(to left bottom, #6D90CB, #5D84C5);
 }
-
 @mixin flex {
   display: -webkit-box;  /* OLD - iOS 6-, Safari 3.1-6, BB7 */
   display: -ms-flexbox;  /* TWEENER - IE 10 */
@@ -57,7 +56,6 @@ body {
   width: 100%;
   padding: 30px;
   margin-bottom: 10px;
-  border: 1px solid black;
 }
 @media all and (min-width:900px) {
   .page {
@@ -82,7 +80,6 @@ body {
   align-self: flex-start;
   width: 70%;
   margin-left: 15px;
-  border: 1px solid black;
 }
 .header {
   width: 100%;
@@ -103,7 +100,6 @@ body {
   padding: 1%;
   background-color: #f0f1f2;
   border-radius: 0 0 5px 5px;
-
 }
 .drink__item {
   @include flex;
@@ -131,7 +127,6 @@ body {
   @extend .drink__item;
   font-size: 1.5em;
 }
-
 .arrow {
   @include flex;
   @include justify-content-center;
@@ -141,7 +136,6 @@ body {
   height: 80px;
   margin: 0 5%;
   background: linear-gradient(#c98474, #d39c8f);
-  background-color: silver;
   border-radius: 50px;
   border: 1px solid #ce9081;
   box-shadow: 8px 10px 20px 0px rgba(46,61,73,0.3);
@@ -191,16 +185,13 @@ td {
   }
 }*/
 .button__cell {
-  width: 50%;
+  width: 100%;
   padding: 10px 20px;
-  background: linear-gradient(#a9db80, #98c573);
-  border: 1px solid #98c573;
   border-radius: 3px;
   color: #fff;
+  text-transform: uppercase;
   cursor: pointer;
   &:hover {
-    background: linear-gradient(#b1de8c, #c2e5a6);
-    border: 1px solid #c2e5a6;
     cursor: pointer;
   }
 }
@@ -217,11 +208,30 @@ td {
   vertical-align: middle;
   text-align: right;
 }
+#charge {
+  background: linear-gradient(#a9db80, #98c573);
+  border: 1px solid #98c573;
+  &:hover {
+    background: linear-gradient(#b1de8c, #c2e5a6);
+    border: 1px solid #c2e5a6;
+  }
+}
+#money {
+  background: linear-gradient(to left bottom, #6D90CB, #5D84C5);
+}
 #reset {
   width: 100%;
   padding: 10px 0;
+  text-align: center;
+  text-transform: uppercase;
+  cursor: pointer;
+  &:hover {
+    background: linear-gradient(#c98474, #d39c8f);
+    border-radius: 3px;
+    border: 1px solid #ce9081;
+    color: #fff;
+  }
 }
-
 #showNumber, #refund {
   width: 100%;
   padding: 10px 20px;

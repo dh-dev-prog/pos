@@ -89,8 +89,7 @@ body {
   align-items: top;
   width: 100%;
   padding: 30px;
-  margin-bottom: 10px;
-  border: 1px solid black; }
+  margin-bottom: 10px; }
 
 @media all and (min-width: 900px) {
   .page {
@@ -121,8 +120,7 @@ body {
   align-items: top;
   align-self: flex-start;
   width: 70%;
-  margin-left: 15px;
-  border: 1px solid black; }
+  margin-left: 15px; }
 
 .header {
   width: 100%;
@@ -207,7 +205,6 @@ body {
   height: 80px;
   margin: 0 5%;
   background: linear-gradient(#c98474, #d39c8f);
-  background-color: silver;
   border-radius: 50px;
   border: 1px solid #ce9081;
   box-shadow: 8px 10px 20px 0px rgba(46, 61, 73, 0.3);
@@ -254,16 +251,13 @@ td {
   }
 }*/
 .button__cell {
-  width: 50%;
+  width: 100%;
   padding: 10px 20px;
-  background: linear-gradient(#a9db80, #98c573);
-  border: 1px solid #98c573;
   border-radius: 3px;
   color: #fff;
+  text-transform: uppercase;
   cursor: pointer; }
   .button__cell:hover {
-    background: linear-gradient(#b1de8c, #c2e5a6);
-    border: 1px solid #c2e5a6;
     cursor: pointer; }
 
 .button__text_small {
@@ -279,9 +273,27 @@ td {
   vertical-align: middle;
   text-align: right; }
 
+#charge {
+  background: linear-gradient(#a9db80, #98c573);
+  border: 1px solid #98c573; }
+  #charge:hover {
+    background: linear-gradient(#b1de8c, #c2e5a6);
+    border: 1px solid #c2e5a6; }
+
+#money {
+  background: linear-gradient(to left bottom, #6D90CB, #5D84C5); }
+
 #reset {
   width: 100%;
-  padding: 10px 0; }
+  padding: 10px 0;
+  text-align: center;
+  text-transform: uppercase;
+  cursor: pointer; }
+  #reset:hover {
+    background: linear-gradient(#c98474, #d39c8f);
+    border-radius: 3px;
+    border: 1px solid #ce9081;
+    color: #fff; }
 
 #showNumber, #refund {
   width: 100%;
