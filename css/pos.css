@@ -95,9 +95,9 @@ body {
   .page {
     width: 1024px;
     margin: 0 auto; } }
-@media all and (max-width: 700px) {
+@media all and (max-width: 800px) {
   .page {
-    min-width: 700px;
+    min-width: 800px;
     margin: 0 auto; } }
 .check {
   width: 30%;
@@ -204,9 +204,8 @@ body {
   min-width: 80px;
   height: 80px;
   margin: 0 5%;
-  background: linear-gradient(#c98474, #d39c8f);
+  background: linear-gradient(#6dc066, #8acc84);
   border-radius: 50px;
-  border: 1px solid #ce9081;
   box-shadow: 8px 10px 20px 0px rgba(46, 61, 73, 0.3);
   transition: box-shadow 0.3s ease;
   font-size: 1.5em;
@@ -237,51 +236,44 @@ td {
   td:nth-of-type(3) {
     text-align: right; }
 
-/*{
-  padding: 10px 20px;
-  background: linear-gradient(#c98474, #d39c8f);
-  border-radius: 3px;
-  border: 1px solid #ce9081;
-  color: #fff;
-  cursor: pointer;
-  &:hover {
-    background: linear-gradient(#a0695c, #c98474);
-    border: 1px solid #b47668;
-    cursor: pointer;
-  }
-}*/
+#quantity {
+  text-align: right;
+  font-size: 2em;
+  color: #6dc066; }
+
 .button__cell {
   width: 100%;
-  padding: 10px 20px;
+  display: flex;
   border-radius: 3px;
-  color: #fff;
+  border: 1px solid #000;
+  color: #000;
   text-transform: uppercase;
+  text-align: center;
   cursor: pointer; }
   .button__cell:hover {
-    cursor: pointer; }
+    cursor: pointer;
+    background-color: #6dc066; }
 
-.button__text_small {
-  display: inline-block;
-  width: 30%;
-  font-size: 1em;
-  vertical-align: middle; }
+.button__text_title {
+  width: 40%;
+  padding: 5px 10px; }
 
-.button__text_big {
-  display: inline-block;
-  width: 65%;
-  font-size: 1.2em;
-  vertical-align: middle;
-  text-align: right; }
+.button__text_num {
+  width: 50%;
+  padding: 5px 10px;
+  text-align: right;
+  color: #c6c6c6;
+  border-left: 1px solid #000;
+  border-right: 1px solid #000; }
 
-#charge {
-  background: linear-gradient(#a9db80, #98c573);
-  border: 1px solid #98c573; }
-  #charge:hover {
-    background: linear-gradient(#b1de8c, #c2e5a6);
-    border: 1px solid #c2e5a6; }
+.button__text_currency {
+  width: 10%;
+  padding: 5px;
+  color: #000; }
 
-#money {
-  background: linear-gradient(to left bottom, #6D90CB, #5D84C5); }
+.button__on {
+  background-color: #6dc066;
+  color: #fff; }
 
 #reset {
   width: 100%;
@@ -290,16 +282,9 @@ td {
   text-transform: uppercase;
   cursor: pointer; }
   #reset:hover {
-    background: linear-gradient(#c98474, #d39c8f);
+    background-color: #6dc066;
     border-radius: 3px;
-    border: 1px solid #ce9081;
     color: #fff; }
-
-#showNumber, #refund {
-  width: 100%;
-  padding: 10px 20px;
-  color: #c98474;
-  text-align: right; }
 
 /* ---------------------------------------------- STATE
 */
