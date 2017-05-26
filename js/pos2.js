@@ -6,9 +6,8 @@
     clicked: null,
     drinkList:[],
     Num: '',
-    total: 0,
     cash: false,
-    charge: false,
+    quantity: true,
 
     Drink: function(name,price){
       this.name = name;
@@ -37,6 +36,7 @@
       viewPanel.init();
       viewTable.init();
       viewCalculator.init();
+      clearTimeout(viewTable.timeout);
     },
 
     add: function(){
@@ -65,8 +65,8 @@
       model.Num += num;
       if (model.cash) {
         viewTable.renderCash(Number(model.Num));
-      } else {
-        viewTable.renderNumber(Number(model.Num));
+      } else if (model.quantity){
+        viewTable.renderQuantity(Number(model.Num));
       }
     },
 
@@ -80,7 +80,7 @@
         model.clicked.count++;
       }
       // reinitialise quantity counter when a number has been entered before an item was clicked
-      viewTable.renderNumber(0);
+      viewTable.renderQuantity(0);
     },
 
     getItem: function(name){
@@ -96,25 +96,37 @@
       var refund = Number(model.Num) - model.bigTotal();
       viewTable.renderRefund(refund);
       model.Num = ''; //if not reset then next command will start with this num. if payed 36$, then next will be 36 x items
+      model.cash = false;
+      model.quantity = false;
     },
 
     reset: function(){
       model.Num = ''; //same than getChange
       viewTable.tbody.innerHTML = '';
       viewTable.total.innerHTML = 0;
-      model.total = 0;
-      viewTable.renderNumber(0);
+      viewTable.renderQuantity(0);
       viewTable.renderCash(0);
       viewTable.renderRefund(0);
       model.drinkList.forEach(function(obj){
         obj["count"] = 0;
       })
       model.cash = false;
-      viewPanel.arrow.click();
+      model.quantity = true;
+
       viewTable.refund.querySelector('.button__text_title').classList.remove('button__on');
       viewTable.charge.querySelector('.button__text_num').style.color = '';
       viewTable.cash.querySelector('.button__text_num').style.color = '';
       viewTable.refund.querySelector('.button__text_num').style.color = '';
+
+      viewPanel.arrow.addEventListener('click', viewPanel.toggleArrow);
+      viewPanel.arrow.click();
+
+      var el = viewTable.cash.parentNode.querySelector('.warning');
+      if(el) {
+        viewTable.cash.parentNode.removeChild(el);
+      }
+
+      viewTable.cashCount = 0;
     }
   };
 
@@ -125,6 +137,7 @@
       this.arrow = document.getElementById('arrow');
       this.drinks = document.querySelector('.drink');
       this.calculator = document.querySelector('.calculator');
+      this.drink__item = document.getElementsByClassName('.drink__item')
 
       //create a button for each item
       model.drinkList.forEach(function(obj){
@@ -132,23 +145,26 @@
         list.innerHTML += el;
       });
       //when item clicked, update rows in the table
-      this.list.addEventListener('click', function(e){
+      function clickItem(e) {
         e.preventDefault();
         var target = e.target;
         var name = target.textContent;
         octopus.updateCurrObj(name);
         octopus.updateCountObj();
         octopus.getItem(name);
-      });
+      }
+      this.list.addEventListener('click', clickItem);
+
       // arrow and panel toggle
-      this.arrow.addEventListener('click', function(){
+      this.toggleArrow = function (){ //use this.name = function in order to use it in an other interface
         this.firstChild.classList.toggle('ion-chevron-left');
         this.firstChild.classList.toggle('ion-chevron-right');
         viewPanel.drinks.classList.toggle('is__hidden');
         viewPanel.calculator.classList.toggle('is__active');
-      })
+      };
+      this.arrow.addEventListener('click', this.toggleArrow); // this will allow to remove the event in viewTable
     }
-  };
+  }
 
   var viewTable = {
 
@@ -160,6 +176,7 @@
       this.cash       = document.getElementById('cash');
       this.refund     = document.getElementById('refund');
       this.reset      = document.getElementById('reset');
+      this.cashCount = 0;
 
       this.quantity.innerHTML = '+ ' + 0;
       this.total.innerHTML = 0;
@@ -167,18 +184,47 @@
       this.charge.querySelector('.button__text_num').innerHTML = 0;
       this.refund.querySelector('.button__text_num').innerHTML = 0;
 
-      this.charge.addEventListener('click', function(e){
-        e.preventDefault();
+      this.charge.addEventListener('click', function(){
+
         viewPanel.arrow.click(); //simulate a click on the arrow button to show the calculator
         model.Num = '';
         model.cash = true;
+        viewPanel.arrow.removeEventListener('click', viewPanel.toggleArrow);
+        viewTable.charge.querySelector('.button__text_title').classList.remove('button__on');
+        viewTable.cash.querySelector('.button__text_title').classList.add('button__on');
+
       });
       //Show the change difference
-      this.cash.addEventListener('click', function(e){
-        e.preventDefault();
-        octopus.getChange();
-      });
+      this.cash.addEventListener('click', function(){
+        if (viewTable.cashCount > 0){
+          return;
+        }
+        var cashNum = viewTable.cash.querySelector('.button__text_num').innerHTML;
+        var chargeNum = viewTable.charge.querySelector('.button__text_num').innerHTML;
+        var msg  = document.createElement('div');
+        var warning = document.createTextNode('not enough!');
+        var ok = document.createTextNode('ok, good to go!');
 
+        msg.setAttribute('class', 'warning');
+
+        if (Number(cashNum) >= Number(chargeNum)) {
+          viewTable.cashCount++;
+          var el = viewTable.cash.parentNode.querySelector('.warning');
+          if(el) {
+            viewTable.cash.parentNode.removeChild(el);
+            msg.appendChild(ok);
+            viewTable.cash.parentNode.appendChild(msg);
+            octopus.getChange();
+          } else {
+            octopus.getChange();
+          }
+        } else {
+          msg.appendChild(warning);
+          viewTable.cash.parentNode.appendChild(msg);
+          viewCalculator.clear.click();
+        }
+      });
+      // reset button
       this.reset.addEventListener('click', function(){
         octopus.reset();
       });
@@ -199,51 +245,47 @@
         row = '<tr id="' + name + '"><td>' + name + '</td><td>' + count + '</td><td class="price">' + total + '$ </tr>';
         this.tbody.innerHTML += row;
         this.charge.querySelector('.button__text_title').classList.add('button__on');
-        this.total.style.color = '#000';
         this.total.innerHTML = bigTotal;
       }
     },
 
-    renderNumber: function(num){
+    renderQuantity: function(num){
       this.quantity.innerHTML = '+ ' + num;
     },
 
     renderCash: function(num) {
-      this.cash.querySelector('.button__text_num').style.color = '#000';
-      this.charge.querySelector('.button__text_title').classList.remove('button__on');
-      this.cash.querySelector('.button__text_title').classList.add('button__on');
       this.cash.querySelector('.button__text_num').innerHTML = num;
     },
 
     renderRefund: function(num) {
-      this.refund.querySelector('.button__text_num').style.color = '#000';
       this.cash.querySelector('.button__text_title').classList.remove('button__on');
       this.refund.querySelector('.button__text_title').classList.add('button__on');
       this.refund.querySelector('.button__text_num').innerHTML = num;
     }
-  }
+  };
 
   var viewCalculator = {
 
     init: function(){
       this.numbers    = document.getElementsByClassName('number');
       this.calculator = document.querySelector('.calculator');
+      this.clear = document.getElementById('C');
 
       // Get the Numbers
       function getNumber(e){
         var target = e.target;
-        var id = target.id;
-        octopus.addNumber(id);
+        if(target !== viewCalculator.clear) {
+          var number = target.id;
+          octopus.addNumber(number);
+        }
       };
       //Clicked number on screen
       this.calculator.addEventListener('click', getNumber);
-
-      //Touch key number on Keyboard
-      document.addEventListener('keydown', function(e){
-        var key = e.key;
-        document.getElementById(key).click();
-      }, true);
-    },
+      this.clear.addEventListener('click', function(){
+        model.Num = '';
+        octopus.addNumber(0);
+      })
+    }
   }
   octopus.init();
 }());

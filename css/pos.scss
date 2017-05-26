@@ -52,34 +52,47 @@ body {
 
 .page {
   @include flex;
+  flex-wrap: wrap;
   @include align-items-top;
   width: 100%;
+  max-width: 768px; //to adjust the items of the container. not to shrink or wrap much.
+  min-width: 670px; //to adjust the items of the container. not to shrink or wrap much.
   padding: 30px;
-  margin-bottom: 10px;
-}
-@media all and (min-width:900px) {
-  .page {
-    width: 1024px;
-    margin: 0 auto;
-  }
-}
-@media all and (max-width:800px) {
-  .page {
-    min-width: 800px;
-    margin: 0 auto;
-  }
+  margin: 0 auto;
 }
 .check {
-  width: 30%;
+  width: 100%;
   margin-right: 15px;
+  order: 2;
 }
 .container {
   @include flex;
   @include justify-content-center;
   @include align-items-top;
   align-self: flex-start;
-  width: 70%;
-  margin-left: 15px;
+  width: 100%;
+  order: 1;
+  margin-bottom: 15px;
+}
+@media all and (min-width:990px) {
+  .page {
+    @include flex;
+    flex-wrap: nowrap;
+    @include align-items-top;
+    max-width: 1024px;
+    padding: 30px;
+    margin: 0 auto;
+  }
+  .check {
+    width: 35%;
+    margin-right: 15px;
+    order: 1;
+  }
+  .container {
+    width: 65%;
+    order: 2;
+    margin-left: 15px;
+  }
 }
 .header {
   width: 100%;
@@ -97,6 +110,7 @@ body {
   @include flex;
   flex-wrap: wrap;
   width: 100%;
+  max-width: 100%;
   padding: 1%;
   background-color: #f0f1f2;
   border-radius: 0 0 5px 5px;
@@ -147,7 +161,6 @@ body {
   color: #fff;
 }
 
-
 table {
   width: 100%;
   background-color: #F5F5F5;
@@ -159,11 +172,21 @@ th {
   background-color: #29313C;
   color: #fdfdfd;
 }
+th:nth-of-type(n+1) {
+  width:55%;
+}
+th:nth-of-type(n+2) {
+  width: 27.5%;
+}
+th:nth-of-type(n+3) {
+  width: 27.5%;
+}
 td {
   padding: 5px 10px;
   border-bottom: 1px solid #E7E7E7;
   text-align: left;
   font-weight: 400;
+  font-size: 1.2em;
   &:nth-of-type(2) {
     text-align: center;
     color: #3B9FF4;
@@ -180,8 +203,7 @@ td {
 .button__cell {
   width: 100%;
   display: flex;
-  border-radius: 3px;
-  border: 1px solid #000;
+  border-radius: 5px;
   color: #000;
   text-transform: uppercase;
   text-align: center;
@@ -189,30 +211,35 @@ td {
   &:hover {
     cursor: pointer;
     background-color: #6dc066;
+    color: #fff;
+    border-radius: 5px;
   }
 }
 .button__text_title {
   width: 40%;
-  padding: 5px 10px;
+  padding: 15px 10px;
+  border-radius: 5px 0 0 5px;
 }
 .button__text_num {
   width: 50%;
-  padding: 5px 10px;
+  padding: 10px 10px;
+  background-color: #6dc066;
   text-align: right;
-  color: #c6c6c6;
-  border-left: 1px solid #000;
-  border-right: 1px solid #000;
+  font-size: 1.5em;
+  color: #fff;
 }
 .button__text_currency {
-  width: 10%;
-  padding: 5px;
-  color: #000;
+  width: 11%;
+  padding: 10px 5px;
+  background-color: #6dc066;
+  border-radius: 0 5px 5px 0;
+  font-size: 1.5em;
+  color: #fff;
 }
 .button__on {
   background-color: #6dc066;
   color: #fff;
 }
-
 #reset {
   width: 100%;
   padding: 10px 0;
@@ -225,7 +252,13 @@ td {
     color: #fff;
   }
 }
-
+.warning {
+  font-size: 0.6em;
+  font-style: italic;
+  text-transform: capitalize;
+  display: block;
+  text-align: right;
+}
 
 /* ---------------------------------------------- STATE
 */
