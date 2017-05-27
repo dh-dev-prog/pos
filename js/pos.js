@@ -243,7 +243,9 @@
           }
         } else { // if cash is not sufficient
           if(el) { // if msg warning on page
+            octopus.clear();
             return;
+
           } else {
             msg.appendChild(warning);
             viewTable.cash.parentNode.appendChild(msg);
