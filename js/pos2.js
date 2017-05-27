@@ -6,8 +6,9 @@
     clicked: null,
     drinkList:[],
     Num: '',
-    cash: false,
     quantity: true,
+    charge: true,
+    cash: false,
 
     Drink: function(name,price){
       this.name = name;
@@ -89,9 +90,16 @@
       var total = model.clicked.total(count);
       var row = model.clicked.row;
       var bigTotal = model.bigTotal();
-      viewTable.render(name, count, total, bigTotal);
+      viewTable.renderRow(name, count, total, bigTotal);
     },
 
+    moveOnCash: function() {
+      viewPanel.arrow.click(); //simulate a click on the arrow button to show the calculator
+      model.Num = '';
+      model.charge = false;
+      model.cash = true;
+      viewPanel.arrow.removeEventListener('click', viewPanel.toggleArrow);
+    },
     getChange: function() {
       var refund = Number(model.Num) - model.bigTotal();
       viewTable.renderRefund(refund);
@@ -99,7 +107,10 @@
       model.cash = false;
       model.quantity = false;
     },
-
+    clear: function() {
+      model.Num = '';
+      octopus.addNumber(0);
+    },
     reset: function(){
       model.Num = ''; //same than getChange
       viewTable.tbody.innerHTML = '';
@@ -110,6 +121,7 @@
       model.drinkList.forEach(function(obj){
         obj["count"] = 0;
       })
+      model.charge = true;
       model.cash = false;
       model.quantity = true;
 
@@ -127,6 +139,7 @@
       }
 
       viewTable.cashCount = 0;
+      viewTable.chargeCount = 0;
     }
   };
 
@@ -134,16 +147,17 @@
 
     init: function(){
       this.list = document.getElementById('list');
+      this.listItem = this.list.getElementsByTagName('li');
       this.arrow = document.getElementById('arrow');
       this.drinks = document.querySelector('.drink');
       this.calculator = document.querySelector('.calculator');
-      this.drink__item = document.getElementsByClassName('.drink__item')
 
       //create a button for each item
       model.drinkList.forEach(function(obj){
         var el = obj['button'];
         list.innerHTML += el;
       });
+
       //when item clicked, update rows in the table
       function clickItem(e) {
         e.preventDefault();
@@ -176,27 +190,33 @@
       this.cash       = document.getElementById('cash');
       this.refund     = document.getElementById('refund');
       this.reset      = document.getElementById('reset');
-      this.cashCount = 0;
 
+      // ----------------------------------------------------- Starting settings
       this.quantity.innerHTML = '+ ' + 0;
       this.total.innerHTML = 0;
       this.cash.querySelector('.button__text_num').innerHTML = 0;
       this.charge.querySelector('.button__text_num').innerHTML = 0;
       this.refund.querySelector('.button__text_num').innerHTML = 0;
 
-      this.charge.addEventListener('click', function(){
+      // ------------------------------------------------- Charge Button Clicked
 
-        viewPanel.arrow.click(); //simulate a click on the arrow button to show the calculator
-        model.Num = '';
-        model.cash = true;
-        viewPanel.arrow.removeEventListener('click', viewPanel.toggleArrow);
-        viewTable.charge.querySelector('.button__text_title').classList.remove('button__on');
-        viewTable.cash.querySelector('.button__text_title').classList.add('button__on');
+      function chargeClick() {
+        if (model.charge) {
+          octopus.moveOnCash();
+          viewTable.charge.querySelector('.button__text_title').classList.remove('button__on');
+          viewTable.cash.querySelector('.button__text_title').classList.add('button__on');
+        } else {
+          return;
+        }
+      }
+      this.charge.addEventListener('click', chargeClick);
 
-      });
-      //Show the change difference
-      this.cash.addEventListener('click', function(){
-        if (viewTable.cashCount > 0){
+
+      //--------------------------------------------- Show the change difference
+
+      function cashClick(){
+        //if cashCount has been clicked once do nothing - second click compare cash to 0 and refund become negative
+        if (!model.cash){
           return;
         }
         var cashNum = viewTable.cash.querySelector('.button__text_num').innerHTML;
@@ -204,39 +224,41 @@
         var msg  = document.createElement('div');
         var warning = document.createTextNode('not enough!');
         var ok = document.createTextNode('ok, good to go!');
+        var el = viewTable.cash.parentNode.querySelector('.warning');
 
         msg.setAttribute('class', 'warning');
 
+        // ------------------------------------------- If Cash is not sufficient
         if (Number(cashNum) >= Number(chargeNum)) {
-          viewTable.cashCount++;
-          var el = viewTable.cash.parentNode.querySelector('.warning');
-          if(el) {
+          if(el) { // if msg warning on page
             viewTable.cash.parentNode.removeChild(el);
             msg.appendChild(ok);
             viewTable.cash.parentNode.appendChild(msg);
-            octopus.getChange();
-          } else {
+            octopus.getChange(); // put ok message and call change-cash compare function
+          } else { // if all good
+            // or if no message call change-cash compare function
             octopus.getChange();
           }
-        } else {
+        } else { // if cash is not sufficient
           msg.appendChild(warning);
           viewTable.cash.parentNode.appendChild(msg);
-          viewCalculator.clear.click();
+          octopus.clear(); // clear to put cash value back to zero;
         }
-      });
-      // reset button
+      };
+      this.cash.addEventListener('click', cashClick);
+
+      // ---------------------------------------------------------- Reset button
       this.reset.addEventListener('click', function(){
         octopus.reset();
       });
     },
 
-    render: function(name, count, total, bigTotal) {
-
+    renderRow: function(name, count, total, bigTotal) {
       var row = document.getElementById(name);
       var sum = 0;
 
-      if(row){                                                            // if row already exists, has an id
-        var counter = row.getElementsByTagName('td')[1];                  // get second cell (quantity)
+      if(row){ // if row already exists, has an id
+        var counter = row.getElementsByTagName('td')[1]; // get second cell (quantity)
         var price = counter.nextSibling;
         counter.innerHTML = count;
         price.innerHTML = total + '$';
@@ -282,8 +304,7 @@
       //Clicked number on screen
       this.calculator.addEventListener('click', getNumber);
       this.clear.addEventListener('click', function(){
-        model.Num = '';
-        octopus.addNumber(0);
+        octopus.clear();
       })
     }
   }
