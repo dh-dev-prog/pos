@@ -130,13 +130,16 @@
       model.cash = false;
       model.quantity = true;
 
+      viewTable.charge.querySelector('.button__text_title').classList.remove('button__on');
       viewTable.refund.querySelector('.button__text_title').classList.remove('button__on');
       viewTable.charge.querySelector('.button__text_num').style.color = '';
       viewTable.cash.querySelector('.button__text_num').style.color = '';
       viewTable.refund.querySelector('.button__text_num').style.color = '';
 
       viewPanel.arrow.addEventListener('click', viewPanel.toggleArrow);
-      viewPanel.arrow.click();
+      if(viewPanel.calculator.classList.contains('is__active')){
+        viewPanel.arrow.click();
+      }
 
       var el = viewTable.cash.parentNode.querySelector('.warning');
       if(el) {
