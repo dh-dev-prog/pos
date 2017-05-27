@@ -114,7 +114,7 @@
     },
     clear: function() {
       model.Num = '';
-      octopus.addNumber(0);
+      this.addNumber('');
     },
     reset: function(){
       model.Num = ''; //same than getChange
