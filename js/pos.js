@@ -242,9 +242,13 @@
             octopus.getChange();
           }
         } else { // if cash is not sufficient
-          msg.appendChild(warning);
-          viewTable.cash.parentNode.appendChild(msg);
-          octopus.clear(); // clear to put cash value back to zero;
+          if(el) { // if msg warning on page
+            return;
+          } else {
+            msg.appendChild(warning);
+            viewTable.cash.parentNode.appendChild(msg);
+            octopus.clear(); // clear to put cash value back to zero;
+          }
         }
       };
       this.cash.addEventListener('click', cashClick);
