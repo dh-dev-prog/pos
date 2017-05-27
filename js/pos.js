@@ -1,6 +1,4 @@
 (function(){
-
-
   var model = {
 
     clicked: null,
@@ -95,6 +93,12 @@
     },
 
     moveOnCash: function() {
+      if(viewPanel.calculator.classList.contains('is__active')){
+        viewPanel.arrow.click();
+      }
+      if(viewTable.quantity) {
+        viewTable.quantity.innerHTML = '+ ' + 0;
+      }
       viewPanel.arrow.click(); //simulate a click on the arrow button to show the calculator
       model.Num = '';
       model.charge = false;
