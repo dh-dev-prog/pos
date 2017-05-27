@@ -203,7 +203,7 @@
       // ------------------------------------------------- Charge Button Clicked
 
       function chargeClick() {
-        if (model.charge) {
+        if (model.charge && Number(viewTable.charge.querySelector('.button__text_num').innerHTML) !== 0) {
           octopus.moveOnCash();
           viewTable.charge.querySelector('.button__text_title').classList.remove('button__on');
           viewTable.cash.querySelector('.button__text_title').classList.add('button__on');
