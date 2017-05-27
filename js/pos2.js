@@ -21,7 +21,7 @@
       model.drinkList.push(this);
     },
 
-    bigTotal: function() {
+    total: function() {
       var sum = this.drinkList.reduce(function(acc, obj){
         return acc + obj.total(obj.count);
       }, 0)
@@ -39,7 +39,6 @@
       viewTable.init();
       viewCalculator.init();
     },
-
     add: function(){
       new model.Drink('Latte',4);
       new model.Drink('Cappuccino',4);
@@ -54,14 +53,12 @@
       new model.Drink('Panzer',9);
       new model.Drink('Tombeau',15);
     },
-
     updateCurrObj: function(name){
       //Get the clicked item and related object
       model.clicked = model.drinkList.filter(function(drink){
         return drink.name === name;
       })[0];
     },
-
     addNumber: function(num){
       model.Num += num;
       if (model.cash) {
@@ -70,14 +67,12 @@
         viewTable.renderQuantity(Number(model.Num));
       }
     },
-
     createButton: function(){
       model.drinkList.forEach(function(obj){
         var el = obj['button'];
         viewPanel.render(el);
       });
     },
-
     updateCountObj: function() {
       //if num entered then update item count by this number, else count++.
       //!!Num has to be reinitialised everytime or next item will be update by this number too
@@ -93,11 +88,10 @@
 
     getItem: function(name){
       var count = model.clicked.count;
-      var price = model.clicked.price;
-      var total = model.clicked.total(count);
+      var price = model.clicked.total(count);
       var row = model.clicked.row;
-      var bigTotal = model.bigTotal();
-      viewTable.renderRow(name, count, total, bigTotal);
+      var total = model.total();
+      viewTable.renderRow(name, count, price, total);
     },
 
     moveOnCash: function() {
@@ -108,7 +102,7 @@
       viewPanel.arrow.removeEventListener('click', viewPanel.toggleArrow);
     },
     getChange: function() {
-      var refund = Number(model.Num) - model.bigTotal();
+      var refund = Number(model.Num) - model.total();
       viewTable.renderRefund(refund);
       model.Num = ''; //if not reset then next command will start with this num. if payed 36$, then next will be 36 x items
       model.cash = false;
@@ -121,7 +115,7 @@
     reset: function(){
       model.Num = ''; //same than getChange
       viewTable.tbody.innerHTML = '';
-      viewTable.total.innerHTML = 0;
+      viewTable.total.innerHTML = 0; //reset charge
       viewTable.renderQuantity(0);
       viewTable.renderCash(0);
       viewTable.renderRefund(0);
@@ -144,9 +138,6 @@
       if(el) {
         viewTable.cash.parentNode.removeChild(el);
       }
-
-      viewTable.cashCount = 0;
-      viewTable.chargeCount = 0;
     }
   };
 
@@ -260,32 +251,29 @@
       });
     },
 
-    renderRow: function(name, count, total, bigTotal) {
+    renderRow: function(name, count, price, total) {
       var row = document.getElementById(name);
       var sum = 0;
 
       if(row){ // if row already exists, has an id
         var counter = row.getElementsByTagName('td')[1]; // get second cell (quantity)
-        var price = counter.nextSibling;
+        var priceCell = counter.nextSibling;
         counter.innerHTML = count;
-        price.innerHTML = total + '$';
-        this.total.innerHTML = bigTotal;
+        priceCell.innerHTML = price + '$';
+        this.total.innerHTML = total;
       } else {
-        row = '<tr id="' + name + '"><td>' + name + '</td><td>' + count + '</td><td class="price">' + total + '$ </tr>';
+        row = '<tr id="' + name + '"><td>' + name + '</td><td>' + count + '</td><td class="price">' + price + '$ </tr>';
         this.tbody.innerHTML += row;
         this.charge.querySelector('.button__text_title').classList.add('button__on');
-        this.total.innerHTML = bigTotal;
+        this.total.innerHTML = total;
       }
     },
-
     renderQuantity: function(num){
       this.quantity.innerHTML = '+ ' + num;
     },
-
     renderCash: function(num) {
       this.cash.querySelector('.button__text_num').innerHTML = num;
     },
-
     renderRefund: function(num) {
       this.cash.querySelector('.button__text_title').classList.remove('button__on');
       this.refund.querySelector('.button__text_title').classList.add('button__on');
