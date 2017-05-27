@@ -34,10 +34,10 @@
 
     init: function(){
       this.add();
+      this.createButton();
       viewPanel.init();
       viewTable.init();
       viewCalculator.init();
-      clearTimeout(viewTable.timeout);
     },
 
     add: function(){
@@ -69,6 +69,13 @@
       } else if (model.quantity){
         viewTable.renderQuantity(Number(model.Num));
       }
+    },
+
+    createButton: function(){
+      model.drinkList.forEach(function(obj){
+        var el = obj['button'];
+        viewPanel.render(el);
+      });
     },
 
     updateCountObj: function() {
@@ -152,24 +159,21 @@
       this.drinks = document.querySelector('.drink');
       this.calculator = document.querySelector('.calculator');
 
-      //create a button for each item
-      model.drinkList.forEach(function(obj){
-        var el = obj['button'];
-        list.innerHTML += el;
-      });
-
-      //when item clicked, update rows in the table
-      function clickItem(e) {
-        e.preventDefault();
-        var target = e.target;
-        var name = target.textContent;
+      // ----------------------------------------- update rows when item clicked
+      function clickItem(el) {
+        var name = el.textContent;
         octopus.updateCurrObj(name);
         octopus.updateCountObj();
         octopus.getItem(name);
       }
-      this.list.addEventListener('click', clickItem);
+      for (var i = 0; i < this.listItem.length; i++) {
+        this.listItem[i].addEventListener('click', function(){
+          clickItem(this);
+        });
+      }
 
-      // arrow and panel toggle
+      // ------------------------------------------- Toggle panel on arrow click
+
       this.toggleArrow = function (){ //use this.name = function in order to use it in an other interface
         this.firstChild.classList.toggle('ion-chevron-left');
         this.firstChild.classList.toggle('ion-chevron-right');
@@ -177,6 +181,9 @@
         viewPanel.calculator.classList.toggle('is__active');
       };
       this.arrow.addEventListener('click', this.toggleArrow); // this will allow to remove the event in viewTable
+    },
+    render: function(el){
+      list.innerHTML += el;
     }
   }
 
